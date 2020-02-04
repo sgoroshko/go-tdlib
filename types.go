@@ -209,7 +209,7 @@ type InlineKeyboardButtonTypeEnum string
 
 // InlineKeyboardButtonType enums
 const (
-	InlineKeyboardButtonTypeURLType          InlineKeyboardButtonTypeEnum = "inlineKeyboardButtonTypeURL"
+	InlineKeyboardButtonTypeURLType          InlineKeyboardButtonTypeEnum = "inlineKeyboardButtonTypeUrl"
 	InlineKeyboardButtonTypeCallbackType     InlineKeyboardButtonTypeEnum = "inlineKeyboardButtonTypeCallback"
 	InlineKeyboardButtonTypeCallbackGameType InlineKeyboardButtonTypeEnum = "inlineKeyboardButtonTypeCallbackGame"
 	InlineKeyboardButtonTypeSwitchInlineType InlineKeyboardButtonTypeEnum = "inlineKeyboardButtonTypeSwitchInline"
