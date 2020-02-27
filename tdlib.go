@@ -276,7 +276,7 @@ func (client *Client) SendAndCatch(jsonQuery interface{}) (UpdateMsg, error) {
 	case response := <-waiter:
 		return response, nil
 		// or timeout
-	case <-time.After(10 * time.Second):
+	case <-time.After(20 * time.Second):
 		client.waiters.Delete(randomString)
 		return UpdateMsg{}, errors.New("timeout")
 	}
