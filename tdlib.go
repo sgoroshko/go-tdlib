@@ -214,8 +214,8 @@ func SetFilePath(path string) {
 	bytes, _ := json.Marshal(UpdateData{
 		"@type": "setLogStream",
 		"log_stream": UpdateData{
-			"@type": "logStreamFile",
-			"path": path,
+			"@type":         "logStreamFile",
+			"path":          path,
 			"max_file_size": 10485760,
 		},
 	})
@@ -229,7 +229,7 @@ func SetFilePath(path string) {
 // By default the TDLib uses a verbosity level of 5 for logging.
 func SetLogVerbosityLevel(level int) {
 	bytes, _ := json.Marshal(UpdateData{
-		"@type": "setLogVerbosityLevel",
+		"@type":               "setLogVerbosityLevel",
 		"new_verbosity_level": level,
 	})
 
@@ -274,6 +274,11 @@ func (client *Client) SendAndCatch(jsonQuery interface{}) (UpdateMsg, error) {
 	select {
 	// wait response from main loop in NewClient()
 	case response := <-waiter:
+		if _, ok := response.Data["code"]; ok {
+			if code, ok := response.Data["code"].(float64); ok {
+				response.Data["code"] = int(code)
+			}
+		}
 		return response, nil
 		// or timeout
 	case <-time.After(10 * time.Second):
