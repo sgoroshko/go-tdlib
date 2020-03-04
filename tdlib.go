@@ -246,7 +246,7 @@ func (client *Client) SendAndCatch(jsonQuery interface{}) (UpdateMsg, error) {
 	switch jsonQuery.(type) {
 	case string:
 		// unmarshal JSON into map, we don't have @extra field, if user don't set it
-		json.Unmarshal([]byte(jsonQuery.(string)), &update)
+		_ = json.Unmarshal([]byte(jsonQuery.(string)), &update)
 	case UpdateData:
 		update = jsonQuery.(UpdateData)
 	}
@@ -274,11 +274,14 @@ func (client *Client) SendAndCatch(jsonQuery interface{}) (UpdateMsg, error) {
 	select {
 	// wait response from main loop in NewClient()
 	case response := <-waiter:
+
+		// type asserting
 		if _, ok := response.Data["code"]; ok {
 			if code, ok := response.Data["code"].(float64); ok {
 				response.Data["code"] = int(code)
 			}
 		}
+
 		return response, nil
 		// or timeout
 	case <-time.After(10 * time.Second):
